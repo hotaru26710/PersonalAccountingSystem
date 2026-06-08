@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="PersonalAccountingSystem/PersonalAccountingSystem.vcxproj" Id="e23abef9-2b43-4ba0-849c-48aa54d28469" />
+</Solution>
