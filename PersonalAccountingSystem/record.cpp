@@ -44,6 +44,7 @@ void addToHead(Record* node) {
 	return;
 }
 
+//获取链表节点个数
 int getCount() {
 	int count = 0;
 	if (head == NULL) {
@@ -53,6 +54,81 @@ int getCount() {
 	while (current != NULL) {
 		count++;
 		current = current->next;
+	}
+	return count;
+}
+
+//获取账单所有金额总值
+float getTotal() {
+	Record* current = head;
+	float total = 0;
+	while (current != NULL) {
+		total += current->amount;
+		current = current->next;
+	}
+	return total;
+}
+
+float getIn() {
+	Record* current = head;
+	float total = 0;
+	while (current != NULL) {
+		if (current->amount > 0) {
+			total += current->amount;
+			current = current->next;
+		}
+		else
+		{
+			current = current->next;
+		}
+	}
+	return total;
+}
+
+int getInCount() {
+	Record* current = head;
+	int count = 0;
+	while (current != NULL) {
+		if (current->amount > 0) {
+			count += 1;
+			current = current->next;
+		}
+		else
+		{
+			current = current->next;
+		}
+	}
+	return count;
+}
+
+float getOut() {
+	Record* current = head;
+	float total = 0;
+	while (current != NULL) {
+		if (current->amount < 0) {
+			total += current->amount;
+			current = current->next;
+		}
+		else
+		{
+			current = current->next;
+		}
+	}
+	return total;
+}
+
+int getOutCount() {
+	Record* current = head;
+	int count = 0;
+	while (current != NULL) {
+		if (current->amount < 0) {
+			count += 1;
+			current = current->next;
+		}
+		else
+		{
+			current = current->next;
+		}
 	}
 	return count;
 }

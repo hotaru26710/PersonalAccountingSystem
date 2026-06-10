@@ -13,7 +13,8 @@ int main() {
 		printf("1.添加记录\n");
 		printf("2.查看当前账单\n");
 		printf("3.修改账目\n");
-		printf("4.退出系统\n");
+		printf("4.查看账目统计信息\n");
+		printf("5.退出系统\n");
 
 		int input;
 		scanf("%d", &input);
@@ -31,6 +32,10 @@ int main() {
 				modifyRecord();
 				break;
 			case 4: {
+				billInformation();
+				break;
+			}
+			case 5: {
 				return 0;
 			}
 			default: {

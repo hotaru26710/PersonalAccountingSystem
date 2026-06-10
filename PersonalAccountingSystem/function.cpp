@@ -64,7 +64,7 @@ void addRecord() {
 void viewRecord() {
 	system("cls");
 	if (head == NULL) {
-		printf("\n======暂无记录=====\n");
+		printf("\n===================暂无记录========================\n");
 		getchar();
 		getchar();
 		return;
@@ -128,14 +128,37 @@ void modifyRecord() {
 		printf("%-12s %-10s %-10.2f %-20s\n", current->date, current->type, current->amount, current->note);
 		current = current->next;
 	}
-	current = head;
+	printf("\n==========================选择修改方式=========================\n");
+	printf("1.通过索引修改\n");
+	printf("2.返回\n");
+
+	int input;
+	while (true) {
+		scanf("%d", &input);
+		switch (input) {
+			case 1:
+				indexModify();
+				return;
+				break;
+			case 2:
+				return;
+			default:
+				printf("无效选择\n");
+				break;
+		}
+	}
+	
+}
+
+void indexModify() {
+	Record* current = head;
 	printf("请选择你想修改账目的索引(1-%d)\n", getCount());
 	int index;
 	scanf("%d", &index);
 	for (int i = 1; i < index; i++) {
 		current = current->next;
 	}
-	printf("当前条目信息:\n%-12s %-10s %-10.2f %-20s\n",current->date,current->type,current->amount,current->note);
+	printf("当前条目信息:\n%-12s %-10s %-10.2f %-20s\n", current->date, current->type, current->amount, current->note);
 	char input[100];
 	printf("请输入更新的数据(直接回车数据不做改变)：\n");
 
@@ -184,5 +207,26 @@ void modifyRecord() {
 	printf("回车键返回\n");
 	getchar();
 	return;
+}
+
+void billInformation() {
+	system("cls");
+	printf("\n=======================账单统计信息============================\n");
+	printf("当前账单条目数: %d\n", getCount());
+	printf("当前记录余额: %.2f\n", getTotal());
+	if (getTotal() <= 0) {
+		printf("当前余额已透支，请注意消费！\n");
+	} 
+	printf("当前净收入: %.2f\n", getIn());
+	printf("当前净收入笔数: %d\n", getInCount());
+	printf("当前净支出: %.2f\n", getOut());
+	printf("当前净支出笔数: %d\n", getOutCount());
+	
+
+	printf("按回车键返回\n");
+	getchar();
+	getchar();
+	return;
+
 }
 
