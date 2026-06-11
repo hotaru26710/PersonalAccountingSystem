@@ -72,6 +72,11 @@ void viewRecord() {
 	printf("\n=============请选择排序方式==============\n");
 	printf("1.正序\n");
 	printf("2.倒序\n");
+	printf("3.仅看收入（正序）\n");
+	printf("4.仅看收入（倒序）\n");
+	printf("5.仅看支出（正序）\n");
+	printf("6.仅看支出（倒序）\n");
+	printf("7.返回\n");
 	int input;
 	Record* current;
 	scanf("%d", &input);
@@ -109,6 +114,101 @@ void viewRecord() {
 		printf("按回车键返回\n");
 		getchar();
 		getchar();
+		return;
+
+	case 3:
+		system("cls");
+		printf("\n====================账单记录=====================\n");
+		printf("%-12s %-10s %-10s %-20s\n", "日期", "类型", "金额", "备注");
+		printf("===================================================================================\n");
+
+		current = head;
+		while (current != NULL) {
+			if (current->amount >= 0) {
+				printf("%-12s %-10s %-10.2f %-20s\n", current->date, current->type, current->amount, current->note);
+				current = current->next;
+			}
+			else {
+				current = current->next;
+			}
+		}
+		printf("已成功加载%d条记录\n", getInCount());
+		printf("当前净收入:%.2f\n", getIn());
+		printf("按回车键返回\n");
+		getchar();
+		getchar();
+		return;
+
+	case 4:
+		system("cls");
+		printf("\n====================账单记录=====================\n");
+		printf("%-12s %-10s %-10s %-20s\n", "日期", "类型", "金额", "备注");
+		printf("===================================================================================\n");
+
+		current = tail;
+		while (current != NULL) {
+			if (current->amount >= 0) {
+				printf("%-12s %-10s %-10.2f %-20s\n", current->date, current->type, current->amount, current->note);
+				current = current->prev;
+			}
+			else {
+				current = current->prev;
+			}
+		}
+		printf("已成功加载%d条记录\n", getInCount());
+		printf("当前净收入:%.2f\n", getIn());
+		printf("按回车键返回\n");
+		getchar();
+		getchar();
+		return;
+
+	case 5:
+		system("cls");
+		printf("\n====================账单记录=====================\n");
+		printf("%-12s %-10s %-10s %-20s\n", "日期", "类型", "金额", "备注");
+		printf("===================================================================================\n");
+
+		current = head;
+		while (current != NULL) {
+			if (current->amount < 0) {
+				printf("%-12s %-10s %-10.2f %-20s\n", current->date, current->type, current->amount, current->note);
+				current = current->next;
+			}
+			else {
+				current = current->next;
+			}
+		}
+		printf("已成功加载%d条记录\n", getOutCount());
+		printf("当前净支出:%.2f\n", getOut());
+		printf("按回车键返回\n");
+		getchar();
+		getchar();
+		return;
+
+	case 6:
+		system("cls");
+		printf("\n====================账单记录=====================\n");
+		printf("%-12s %-10s %-10s %-20s\n", "日期", "类型", "金额", "备注");
+		printf("===================================================================================\n");
+
+		current = tail;
+		while (current != NULL) {
+			if (current->amount < 0) {
+				printf("%-12s %-10s %-10.2f %-20s\n", current->date, current->type, current->amount, current->note);
+				current = current->prev;
+			}
+			else {
+				current = current->prev;
+			}
+		}
+		printf("已成功加载%d条记录\n", getOutCount());
+		printf("当前净支出:%.2f\n", getOut());
+		printf("按回车键返回\n");
+		getchar();
+		getchar();
+		return;
+
+	case 7:
 		return;
 
 	default:
