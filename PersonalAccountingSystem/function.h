@@ -7,7 +7,10 @@ void addRecord();
 void viewRecord();
 void modifyRecord();
 void billInformation();
+void deleteRecord();
 
 
 //次要功能函数声明
 void indexModify();
+void indexDelete();
+bool isDateValid(const char* date);

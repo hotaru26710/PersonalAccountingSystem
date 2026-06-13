@@ -23,3 +23,4 @@ float getIn();
 int getInCount();
 float getOut();
 int getOutCount();
+void deleteNode(Record* current);

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "function.h"
 #include "record.h"
 
@@ -46,7 +47,15 @@ void addRecord() {
 	float amount;
 
 	printf("请输入日期(YYYY-MM-DD):\n");
-	scanf("%s", date);
+	while (true) {
+		scanf("%s", date);
+		if (isDateValid(date)) {
+			break;
+		}
+		else {
+			printf("输入日期无效，请重新输入\n");
+		}
+	}
 	printf("请输入类型(购物/租金/收入等):\n");
 	scanf("%s", type);
 	printf("请输入金额:\n");
@@ -328,5 +337,97 @@ void billInformation() {
 	getchar();
 	return;
 
+}
+
+void deleteRecord() {
+	system("cls");
+	printf("\n====================账单记录=====================\n");
+	printf("%-12s %-10s %-10s %-20s\n", "日期", "类型", "金额", "备注");
+	printf("===================================================================================\n");
+
+	Record* current = head;
+	while (current != NULL) {
+		printf("%-12s %-10s %-10.2f %-20s\n", current->date, current->type, current->amount, current->note);
+		current = current->next;
+	}
+	printf("\n==========================选择删除方式=========================\n");
+	printf("1.通过索引删除\n");
+	printf("2.返回\n");
+
+	int input;
+	while (true) {
+		scanf("%d", &input);
+		switch (input) {
+		case 1:
+			indexDelete();
+			return;
+		case 2:
+			return;
+		default:
+			printf("无效选择\n");
+			break;
+		}
+	}
+}
+
+void indexDelete() {
+	Record* current = head;
+	printf("请选择你想删除账目的索引(1-%d)\n", getCount());
+	int index;
+	scanf("%d", &index);
+	while (getchar() != '\n');
+	for (int i = 1; i < index; i++) {
+		current = current->next;
+	}
+	printf("当前条目信息:\n%-12s %-10s %-10.2f %-20s\n", current->date, current->type, current->amount, current->note);
+	printf("是否确认删除？（Y/N）");
+	char input;
+	scanf("%c", &input);
+	while (true) {
+		if (input == 'Y' || input == 'y') {
+			deleteNode(current);
+			saveToFile();
+			return;
+		}
+		if (input == 'N' || input == 'n') {
+			return;
+		}
+	}
+}
+
+bool isDateValid(const char* date) {
+	//长度检查
+	if (strlen(date) != 10) {
+		return false;
+	}
+
+	//连接符检查
+	if (date[4] != '-' || date[7] != '-') {
+		return false;
+	}
+
+	//数字检查
+	for (int i = 0; i < 10; i++) {
+		if (i == 4 || i == 7) {
+			continue;
+		};
+		if (!isdigit(date[i])) {
+			return false;
+		}
+	}
+
+	//天数匹配
+	int days[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	int year, month, day;
+	sscanf(date, "%d-%d-%d", &year, &month, &day);
+	if (month == 2) {
+		int isLeap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+		if (day > (isLeap ? 29 : 28)) return false;
+	}
+	else {
+		if (day > days[month - 1]) return false;
+	}
+
+	return true;
 }
 

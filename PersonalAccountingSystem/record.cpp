@@ -18,6 +18,9 @@ Record* createNewNode(char date[], char type[], float amount, char note[]) {
 	return NewNode;
 }
 
+//删除节点
+
+
 //尾差节点
 void addToTail(Record* node) {
 	if (head == NULL) {
@@ -131,4 +134,14 @@ int getOutCount() {
 		}
 	}
 	return count;
+}
+
+void deleteNode(Record* current) {
+	if (current->prev != NULL) {
+		current->prev->next = current->next;
+	}
+	if (current->next != NULL) {
+		current->next->prev = current->prev;
+	}
+	free(current);
 }
